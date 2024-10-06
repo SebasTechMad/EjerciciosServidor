@@ -33,5 +33,7 @@
             echo "<br>";
         }
     ?>
+
+    <?php show_source(__FILE__)?>
     </body>
 </html>

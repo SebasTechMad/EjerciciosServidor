@@ -24,11 +24,7 @@
             $contSuma = $coordenadasY + $piramideNumSoporte;
             for($coordenadasX; $coordenadasX < $contSuma ; $coordenadasX++)
             {
-                if($contSuma ==1){
-                    echo "<span>*</span>";
-                }else{
-                    echo "<span>*</span>";
-                }
+                echo "<span>*</span>";
             }
 
             echo "<br>";
