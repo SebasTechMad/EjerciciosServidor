@@ -6,13 +6,13 @@
         <title>Document</title>
     </head>
     <body>
-        <?php generateStructureTable($bingo_structure);?>
+        <?php generateBingo($bingo_structure);?>
     </body>
     <?php 
     
     $bingo_structure;
     
-    function generateStructureTable (&$array)
+    function generateBingo (&$array)
     {
         for($contY = 0; $contY < 3; $contY++)
         {
@@ -21,17 +21,14 @@
                 $array[$contY][$contX] = 0;
             }
         }
-        generateVoidBingo($array);
+        generateVoidsBingo($array);
+        fillStructureBingo($array);
     }
 
     function generateNumsRandoms()
     {
         $nums_randoms = [];
 
-        // for($i = 0; $i < 4; $i++)
-        // {
-        //     $nums_randoms[] = random_int(0,9);
-        // }
         $contador = 0;
         while($contador < 4)
         {
@@ -46,11 +43,10 @@
                 }
             }
         }
-
         return $nums_randoms;
     }
 
-    function generateVoidBingo(&$array)
+    function generateVoidsBingo(&$array)
     {
         for($contY = 0; $contY < 3; $contY++)
         {
@@ -63,7 +59,7 @@
             {
                 if($contX == $nums_aleatorios[$contNumsAleatorios])
                 {
-                    $array[$contY][$contX] = 1;
+                    $array[$contY][$contX] = 404;
                     $contNumsAleatorios++;
                     $contX = 0;
                 }else{
@@ -71,11 +67,47 @@
                 }
             }
         }
-        print_r($array);
     }
 
-    
+    function fillStructureBingo(&$array)
+    {
+        $min = 1;
+        $max = 9;
+        for($contX = 0; $contX < 9; $contX++)
+        {
+            if($contX == 0){
+                $min += 9;
+                $max += 10;
+            }else{
+                if($contX == 8){
+                    $min +=10;
+                    $max += 11;
+                }else{
+                    $min += 10;
+                    $max += 10;
+                }
+            }
+            
+            for($contY = 0; $contY < 3; $contY++)
+            {
 
+                if(!$array[$contY][$contX] == 404){
+                    $array[$contY][$contX] = random_int($min,$max);
+                }
+            }
+        }
+    }
+
+    function validateCardBingo(&$array)
+    {
+        // Necesitamos cumplir con los siguientes requisitos:
+        // Existen tres columnas con 1 valor y resto solo tiene 2
+
+        //Dos columnas consecutivas no pueden tener los valores o huecos en las misma posiciones. 
+        // Por ejemplo:  si la primera columna tiene valores en la fila 1 y 3 la siguiente columna 
+        // no puede tener valores en la fila 1 y 3.
+
+    }
 
     ?>
 </html>
