@@ -26,7 +26,7 @@
             $resultado = "$resultado &nbsp;".$valorStrDado."&nbsp;";
             $jugador[] = $num_aleatorio;
         }
-
+        sort($jugador);
         return $resultado;
     }
 
