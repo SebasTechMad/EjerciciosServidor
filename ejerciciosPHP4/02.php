@@ -6,8 +6,21 @@
         <title>mini calculadora</title>
         <?php
 
+        $valor1 = 1;
+        $valor2 = 2;
+        
+
+        getValorAnterior($valor1, $valor2);
+
+            function getValorAnterior(&$valor1, &$valor2){
+                isset($_REQUEST["primer_numero"]) ? $valor1 = $_REQUEST["primer_numero"] : $valor1 = 0;
+
+                isset($_REQUEST["segundo_numero"]) ? $valor2 = $_REQUEST["segundo_numero"] : $valor2 = 0;
+            }
+
+
             function comprobarValores(){
-                return !empty($_REQUEST["primer_numero"]) && !empty($_REQUEST["segundo_numero"]);
+                return is_numeric($_REQUEST["primer_numero"]) && is_numeric($_REQUEST["segundo_numero"]);
             }
 
 
@@ -18,7 +31,7 @@
                     $valor1 = $_REQUEST["primer_numero"];
                     $valor2 = $_REQUEST["segundo_numero"];
                     $operacion = $_REQUEST["btncalculo"];
-                    $resultado;
+                    $resultado = 0;
                     switch($operacion)
                     {
                         case "+":{
@@ -54,11 +67,11 @@
     </head>
     <body>
         <article class="main-article">
-            <form action="02.php">
-                <label for="">Nº 1:</label>
-                <input type="number" name="primer numero"><br>
-                <label for="">Nº 2:</label>
-                <input type="number" name="segundo numero"><br>
+            <form action="02.php" method="post">
+                <label for="">Nº1</label><br>
+                <input type="number" name="primer numero" value=<?php echo $valor1 ?> ><br>
+                <label for="">Nº2</label><br>
+                <input type="number" name="segundo numero" value=<?php echo $valor2 ?> ><br>
                 <div>
                     <fieldset>
                         <input type="submit" value="+" name="btncalculo">
