@@ -32,14 +32,13 @@
                 
                     <fieldset>
                         <legend><b>¿Practica artes mágicas?</b></legend>
-                        <input type="radio" name="magia" value="si" id="chkSi"><label for="">si</label><br>
-                        <input type="radio" name="magia" value="no" id="chkNo"><label for="">no</label><br>
+                        <input type="radio" name="magia" value="si" id="chkSi" required><label for="">si</label><br>
+                        <input type="radio" name="magia" value="no" id="chkNo" required><label for="">no</label><br>
                     </fieldset>
         
                     <h3>Subir imagen:</h3>
                     <fieldset>
-                        <input type="hidden" name="MAX_FILE_SIZE" value="1000">
-                        <input type="file" accept="image/png" name="foto" id="imgPerfil">
+                        <input type="file" name="foto" id="foto">
                     </fieldset>
     
                     <div class="buttons-options">

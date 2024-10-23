@@ -17,6 +17,18 @@
 
     function getFile(){
 
+        $uploadDir = 'uploads/';
+
+
+        if ($_FILES['foto']['error'] !== UPLOAD_ERR_OK) {
+            $uploadFile = $uploadDir . "imageNotFound.gif";
+        }else{
+            $uploadFile = $uploadDir . basename($_FILES['foto']['name']);
+        }
+
+        move_uploaded_file($_FILES['foto']['tmp_name'], $uploadFile);
+
+        return $uploadFile;
     }
 
     function getArmas(){
@@ -73,7 +85,7 @@
                         <!--TODO COMPROBAR SUBIDA IMAGEN-->
                         <b></b>
                         <!--TODO INTRODUCIR IMAGEN-->
-
+                        <img src='.getFile().'>
                         <!--ERROR SUBIDA IMAGEN-->
                     </div>
                 </div>
@@ -93,9 +105,8 @@
         $nombre = getName();
         $nickname = getNickname();
         $age = getAge();
-        $htmlContent = getHTML($nombre, $nickname, $age); 
-
-        //echo $htmlContent;
+        $htmlContent = getHTML($nombre, $nickname, $age);
+        echo $htmlContent;
     }
 ?>
 
