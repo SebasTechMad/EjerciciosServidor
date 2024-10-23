@@ -1,0 +1,25 @@
+body{
+    background-color: rgb(255, 255, 40);
+}
+
+.title-header{
+    text-align: center;
+}
+
+.content-jugador{
+    display: flex;
+}
+
+.info-jugador{
+    display: flex;
+    flex-direction: column;
+}
+
+#datos{
+    padding-top: 5%;
+}
+
+div.info-jugador > b{
+    margin-bottom: 1rem;
+}
+

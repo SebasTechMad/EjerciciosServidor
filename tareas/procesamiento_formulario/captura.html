@@ -4,47 +4,49 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Formulario de jugador</title>
-        <link rel="stylesheet" href="./estilos.css">
+        <link rel="stylesheet" href="./captura.css">
     </head>
     <body>
         <h1>Formulario de Jugador</h1>
         <div class="content-formulario">
-            <div>
-                
-                <label for=""><b>Nombre :</b></label><br>
-                <input type="text" name="nombre" id=""><br>
-                
-                <label for=""><b>Alias :</b></label><br>
-                <input type="text" name="alias" id=""><br>
-                
-                <label for=""><b>Edad :</b></label><br>
-                <input type="text" name="edad" id=""><br><br>
-            </div>
-    
-                <fieldset>
-                    <legend><b>Armas a elegir (puedes elegir varias):</b></legend>
-                    <input type="checkbox" name="maza" id="chkMaza"><label for="chkMaza">Maza</label><br>
-                    <input type="checkbox" name="antorcha" id="chkAntorcha"><label for="chkAntorcha">Antorcha</label><br>
-                    <input type="checkbox" name="martillo" id="chkMartillo"><label for="chkMartillo">martillo</label><br>
-                    <input type="checkbox" name="latigo" id="chkLatigo"><label for="chkLatigo">Látigo</label><br>
-                </fieldset>
-                <br>
-    
-                <fieldset>
-                    <legend><b>¿Practica artes mágicas?</b></legend>
-                    <input type="radio" name="si" id="chkSi"><label for="">si</label><br>
-                    <input type="radio" name="si" id="chkNo"><label for="">no</label><br>
-                </fieldset>
-    
-                <h3>Subir imagen:</h3>
-                <fieldset>
-                    <button>Examinar</button>
-                </fieldset>
-
-                <div class="buttons-options">
-                    <button>Enviar</button>
-                    <button>Borrar</button>
+            <form action="index.php" method="post" enctype="multipart/form-data">
+                <div>
+                    <label for=""><b>Nombre :</b></label><br>
+                    <input type="text" name="nombre" id=""><br>
+                    
+                    <label for=""><b>Alias :</b></label><br>
+                    <input type="text" name="alias" id=""><br>
+                    
+                    <label for=""><b>Edad :</b></label><br>
+                    <input type="number" name="edad" id=""><br><br>
                 </div>
+        
+                    <fieldset>
+                        <legend><b>Armas a elegir (puedes elegir varias):</b></legend>
+                        <input type="checkbox" name="arma[]" value="maza" id="chkMaza"><label for="chkMaza">Maza</label><br>
+                        <input type="checkbox" name="arma[]" value="antorcha" id="chkAntorcha"><label for="chkAntorcha">Antorcha</label><br>
+                        <input type="checkbox" name="arma[]" value="martillo" id="chkMartillo"><label for="chkMartillo">martillo</label><br>
+                        <input type="checkbox" name="arma[]" value="latigo" id="chkLatigo"><label for="chkLatigo">Látigo</label><br>
+                    </fieldset>
+                    <br>
+                
+                    <fieldset>
+                        <legend><b>¿Practica artes mágicas?</b></legend>
+                        <input type="radio" name="magia" value="si" id="chkSi"><label for="">si</label><br>
+                        <input type="radio" name="magia" value="no" id="chkNo"><label for="">no</label><br>
+                    </fieldset>
+        
+                    <h3>Subir imagen:</h3>
+                    <fieldset>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="1000">
+                        <input type="file" accept="image/png" name="foto" id="imgPerfil">
+                    </fieldset>
+    
+                    <div class="buttons-options">
+                        <input type="reset" value="Borrar">
+                        <input type="submit" value="Enviar">
+                    </div>
+            </form>
         </div>
     </body>
 </html>
