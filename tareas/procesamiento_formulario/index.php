@@ -1,7 +1,7 @@
 <?php
 
     $estatusImagen = "";
-    $errorImagen = "Error al subir la imagen";
+    $errorImagen = "";
 
     function getName(){
         return $_POST['nombre'];
@@ -15,14 +15,17 @@
         return $_POST['edad'];
     }
 
-    function getFile(){
+    function getFile(&$msgEstatus, &$msgError){
 
         $uploadDir = 'uploads/';
 
 
         if ($_FILES['foto']['error'] !== UPLOAD_ERR_OK) {
             $uploadFile = $uploadDir . "imageNotFound.gif";
+            $msgEstatus = "No se ha subido una imagen";
+            $msgError = "Error al subir imagen";
         }else{
+            $msgEstatus = "Imagen subida";
             $uploadFile = $uploadDir . basename($_FILES['foto']['name']);
         }
 
@@ -57,7 +60,7 @@
 
 
 
-    function getHTML($name, $nickname, $age){
+    function getHTML($name, $nickname, $age, $src,$estatusImagen, $errorImagen){
         return '<!DOCTYPE html>
         <html lang="es">
             <head>
@@ -83,10 +86,11 @@
 
                     <div class="info-jugador">
                         <!--TODO COMPROBAR SUBIDA IMAGEN-->
-                        <b></b>
+                        <b>'.$estatusImagen.'</b>
                         <!--TODO INTRODUCIR IMAGEN-->
-                        <img src='.getFile().'>
+                        <img src='.$src.' class ="img-style">
                         <!--ERROR SUBIDA IMAGEN-->
+                        <b>'.$errorImagen.'</b>
                     </div>
                 </div>
 
@@ -105,7 +109,8 @@
         $nombre = getName();
         $nickname = getNickname();
         $age = getAge();
-        $htmlContent = getHTML($nombre, $nickname, $age);
+        $src = getFile($estatusImagen, $errorImagen);
+        $htmlContent = getHTML($nombre, $nickname, $age,$src ,$estatusImagen,$errorImagen);
         echo $htmlContent;
     }
 ?>
