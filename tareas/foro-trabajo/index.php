@@ -8,6 +8,9 @@ include_once 'app/funciones.php';
 // Salida hacia buffer
 ob_start(); 
 $msg ="";
+$letrasMasRepetidas = "";
+$palabrasMasRepetidas = "";
+
 
 
 // Segun la orden 
@@ -37,6 +40,8 @@ else {
             break;
         case "Detalles": // Mensaje y detalles
             echo "Detalles de su opinión";
+            $letrasMasRepetidas = wordsRepeated($_REQUEST['comentario']);
+            $palabrasMasRepetidas = palabrasRepetidas($_REQUEST['comentario']);
             include_once 'app/plantillas/comentariorelleno.php';
             include_once 'app/plantillas/detalles.php';
             break;
