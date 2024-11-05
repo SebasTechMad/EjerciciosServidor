@@ -51,6 +51,8 @@ function regexUser($usuario): bool
 function usuarioOk($usuario, $contraseña) :bool {
 
    $comprobacion = false;
+   $usuario = strip_tags($usuario);
+   $contraseña = strip_tags($contraseña);
 
    if(regexUser($usuario)){
       $comprobacion = ($contraseña == strrev($usuario));
