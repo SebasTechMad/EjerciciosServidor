@@ -1,43 +1,67 @@
 <?php 
     session_start();
     $compraRealizada = "";
-    $articulos = ["Platanos","Limones","Manzanas","Narajas"];
+    $articulos = [];
+
 
 
     function fillCompras()
     {
         global $compraRealizada;
-        foreach ($articulos as $articulo) {
-            if(isset($_SERVER[$articulo])){
-                $compraRealizada = $articulo." ".$_SESSION[$articulo].", ";
-            }
-        }
 
+        foreach($_SESSION['frutas'] as $articulo => $numero)
+        {
+            foreach($numero as $articulo1 => $numero1){
+                $lineaArray =$articulo1." ".$numero1;
+            }
+
+            $compraRealizada = $compraRealizada.$lineaArray."<br>";
+        }
     }
 
 
 
     function accionesGET(){
-        if(isset($_GET['cliente'])){
+        global $compraRealizada;
+        global $articulos;
+
+        if(isset($_GET['cliente']) || $_SERVER['REQUEST_METHOD'] == "POST"){
             $_SESSION['cliente'] = $_GET['cliente'];
-            fillCompras();
             include_once ("./compra.php");
         }else{
             include_once ("./bienvenida.php");
         }
+
     }
 
     function accionesPOST(){
-        fillCompras();
+        global $compraRealizada;
+        global $articulos;
+        //fillCompras();
+        
+        if($_SERVER['REQUEST_METHOD']=="POST"){
+            
+            switch ($_POST['accion']){
+                case "Anotar":
+                    //TODO HACER UN FILL A LA LISTA
+                    $articulos[] = [ $_POST['fruta'] => $_POST['cantidad'] ];
 
-        switch ($_POST['accion']){
+                    if(!isset($_SESSION['frutas'])){
+                        $_SESSION['frutas'] = $articulos;
+                    }else{
+                        $_SESSION['frutas'] = array_merge($_SESSION['frutas'],$articulos);
+                    }
 
-            case " Anotar ":
-                $_SESSION[]
+                    fillCompras();
+                    include_once ("./compra.php");
+                    break;
 
-
-
-
+                case "Terminar":
+                    fillCompras();
+                    include_once ("./despedida.php");
+                    session_destroy();
+                    break;
+            }
         }
     }
 
@@ -45,7 +69,13 @@
 
 
 
-    if($_SERVER['REQUEST_METHOD']=="GET"){
+    // if($_SERVER['REQUEST_METHOD']=="GET"){
+    //     accionesGET();
+    // }else{
+    //     accionesPOST();
+    // }
+
+    if(!isset($_SESSION['cliente'])){
         accionesGET();
     }else{
         accionesPOST();
