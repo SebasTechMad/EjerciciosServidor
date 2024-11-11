@@ -9,13 +9,13 @@
     {
         global $compraRealizada;
 
-        foreach($_SESSION['frutas'] as $articulo => $numero)
+        //EN CASO DE QUE EL USUAIO AÑADA DATOS A LA LISTA, LA
+        // RECORREMOS
+        if(isset($_SESSION['frutas']))
         {
-            foreach($numero as $articulo1 => $numero1){
-                $lineaArray =$articulo1." ".$numero1;
+            foreach($_SESSION['frutas'] as $c => $v){
+                $compraRealizada .= $c." ".$v."<br>";
             }
-
-            $compraRealizada = $compraRealizada.$lineaArray."<br>";
         }
     }
 
@@ -23,8 +23,6 @@
 
     function accionesGET(){
         global $compraRealizada;
-        global $articulos;
-
         if(isset($_GET['cliente']) || $_SERVER['REQUEST_METHOD'] == "POST"){
             $_SESSION['cliente'] = $_GET['cliente'];
             include_once ("./compra.php");
@@ -37,21 +35,13 @@
     function accionesPOST(){
         global $compraRealizada;
         global $articulos;
-        //fillCompras();
         
         if($_SERVER['REQUEST_METHOD']=="POST"){
             
+            //Dependiendo del botón seleccionado, haremos X acción
             switch ($_POST['accion']){
                 case "Anotar":
-                    //TODO HACER UN FILL A LA LISTA
-                    $articulos[] = [ $_POST['fruta'] => $_POST['cantidad'] ];
-
-                    if(!isset($_SESSION['frutas'])){
-                        $_SESSION['frutas'] = $articulos;
-                    }else{
-                        $_SESSION['frutas'] = array_merge($_SESSION['frutas'],$articulos);
-                    }
-
+                    $_SESSION['frutas'][$_POST['fruta']] = $_POST['cantidad'];
                     fillCompras();
                     include_once ("./compra.php");
                     break;
@@ -61,20 +51,20 @@
                     include_once ("./despedida.php");
                     session_destroy();
                     break;
+
+                case "Anular":
+                    unset($_SESSION['frutas'][$_POST['fruta']]);
+                    fillCompras();
+                    include_once ("./compra.php");
+                    break;
             }
+        }else{  //En caso de que el usuario cambie de pestaña y venga con una peticion GET
+            fillCompras();
+            include_once ("./compra.php");
         }
     }
 
-
-
-
-
-    // if($_SERVER['REQUEST_METHOD']=="GET"){
-    //     accionesGET();
-    // }else{
-    //     accionesPOST();
-    // }
-
+    //parte MAIN index.php
     if(!isset($_SESSION['cliente'])){
         accionesGET();
     }else{
