@@ -9,7 +9,16 @@ require_once ('dat/datos.php');
  */
 function userOk($login,$clave):bool {
     global $usuarios;
-    return true;
+    $comprobacion = false;
+
+    foreach ($usuarios as $Nuser => $datos) {
+        if ($Nuser == $login &&  $clave == $datos[1]){
+            $comprobacion = true;
+        }
+    }
+
+
+    return $comprobacion;
 }
 
 /**
@@ -18,8 +27,8 @@ function userOk($login,$clave):bool {
  *  @return ROL_ALUMNO o ROL_PROFESOR
  */
 function getUserRol($login){
-    
-    return ROL_ALUMNO;
+    global $usuarios;
+    return $usuarios[$login][2];
 }
 
 /**
@@ -32,10 +41,19 @@ function verNotasAlumno($codigo):String{
     global $nombreModulos;
     global $notas;
     global $usuarios;
+    $contadorNotas = 0;
 
-    $msg .= " Bienvenido/a alumno/a: ". "FULANITO";
+    $currentName = $usuarios[$codigo][0];
+
+    $msg .= " Bienvenido/a alumno/a: ".$currentName;
+    $msg .= "<br><hr><br>";
     $msg .= "<table>";
-    // Completar
+    $msg .= "<tr><th> Módulo </th><th> Nota </th></tr>";
+
+    foreach($nombreModulos as $modulo) {
+        $msg .= "<tr><td>".$modulo."</td><td>".$notas[$codigo][$contadorNotas]."</td></tr>";
+        $contadorNotas++;
+    }
     $msg .= "</table>";
     return $msg;
 }
@@ -50,8 +68,46 @@ function verNotaTodas ($codigo): String {
     global $nombreModulos;
     global $notas;
     global $usuarios;
-    $msg .= " Bienvenido Profesor: ". " D. FULATINO";
+
+    $currentName = $usuarios[$codigo][0];
+
+    $msg .= " Bienvenido Profesor: ".$currentName;
+    $msg .= "<br><hr><br>";
     $msg .= "<table>";
+    $numeroAlumnos = count($usuarios);
+    //Esta variable auxiliar es para acordarme que estoy automatizando
+    // tambien la parte de encabezado (el nombre, el nombre de los modulos, etc...)
+    $rellenoEncabezado = 1;
+    $indexCont = 0;
+
+    $msg .= "<tr><th>Nombre</th>";
+    /*Tenemos que excluir al profe y tener en cuenta que
+    automatizaremos el nombre de cada columna*/
+    foreach($usuarios as $Nuser => $datos) 
+    {
+        //ENCABEZADO
+        if($indexCont == 0)
+        {
+            foreach ($nombreModulos as $modulo)
+            {
+                $msg .= "<th>".$modulo."</th>";
+            }
+            $msg .= "</tr>";
+        }
+        else
+        {
+            //En caso de que sea un alumno, aparecerá en la tabla
+            if($datos[2] != ROL_PROFESOR)
+            {
+                $msg .= "<tr><td>".$datos[0]."</td>";
+                foreach ($notas[$Nuser] as $nota) {
+                    $msg .= "<td>".$nota."</td>";
+                }
+            }
+            $msg .= "</tr>";
+        }
+        $indexCont++;
+    }
     $msg .= "</table>";
     return $msg;
 }
