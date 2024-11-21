@@ -7,7 +7,7 @@ function accionBorrar ($id){
     
     // Elimino de la tabla
     unset( $_SESSION['tuser'][$id]);
-    $_SESSION['msg'] = "se ha eliminado al usuario correctamente"; 
+    $_SESSION['msg'] = "se ha eliminado al usuario correctamente";
     
 }
 
@@ -47,10 +47,14 @@ function accionModificar($id){
 // Modifica el contenido de usuario
 function accionPostModificar() {
     //<<<< COMPLETAR >>>>>>
-    $id = $_POST['login'];
-    $nuevovalor = [ $_POST['clave'],$_POST['nombre'],$_POST['comentario']];
-    $_SESSION['tuser'][$id]= $nuevovalor;  
-    $_SESSION['msg'] = " Usuario con login $id actualizado";
+    if(comprobarVacios()){
+        $id = $_POST['login'];
+        $nuevovalor = [ $_POST['clave'],$_POST['nombre'],$_POST['comentario']];
+        $_SESSION['tuser'][$id]= $nuevovalor;  
+        $_SESSION['msg'] = " Usuario con login $id actualizado";
+    }else{
+        $_SESSION['msg'] = "Error, rellena los datos para modificar";
+    }
 
 }
 
@@ -74,13 +78,37 @@ function accionPostAlta(){
     
     limpiarArrayEntrada($_POST); //Evito la posible inyección de código
     //<<<< COMPLETAR >>>>>>
-    
-    
+    if(comprobarVacios()){
+        if(!comprobarMismoLogin()){
+            $id = $_POST['login'];
+            $nuevo = [ $_POST['clave'],$_POST['nombre'],$_POST['comentario']];
+            $_SESSION['tuser'][$id]= $nuevo;  
+            $_SESSION['msg'] = "Nuevo usuario añadido.";
+        }else{
+            $_SESSION['msg'] = "No se puedo crear, el login ya existe";
+        }
+    }else{
+        $_SESSION['msg'] = "No se puedo crear, rellena todos los datos";
+    }
     //<<<< COMPLETAR y CORREGIR>>>>>>
-    $id = $_POST['login'];
-    $nuevo = [ $_POST['clave'],$_POST['nombre'],$_POST['comentario']];
-    $_SESSION['tuser'][$id]= $nuevo;  
-    $_SESSION['msg'] = " Nuevo usuario añadido.";
+    
+}
+
+function comprobarVacios(){
+    $comprobacion = true;
+
+    foreach ($_POST as $nombre_campo => $valor) {
+        if(empty($valor)){
+            $comprobacion = false;
+            break;
+        }
+    }
+    print_r($comprobacion);
+    return $comprobacion;
+}
+
+function comprobarMismoLogin(){
+    return array_key_exists($_POST['login'], $_SESSION['tuser']);
 }
 
 

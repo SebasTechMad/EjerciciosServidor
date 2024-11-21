@@ -4,7 +4,6 @@
 //  Hasta que no se sale de la sesión no se vuelvan los cambios.
 
 session_start();
-
 include_once 'app/funciones.php';
 include_once 'app/acciones.php';
 
