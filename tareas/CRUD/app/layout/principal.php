@@ -18,8 +18,7 @@
             <?= $contenido ?>
             <form>
                 <input type="submit" name="orden" value="Nuevo">
-                <input type="submit" name="orden" value="Terminar">
-            </form>
+                <input type="button" name="orden" value="Terminar" onclick="confirmarVolcar();">
         </div>
     </div>
 </body>
