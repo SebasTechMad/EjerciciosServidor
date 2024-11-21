@@ -33,7 +33,3 @@ if ($_SESSION['intentos']>=5) {
       include_once('app/acceso.php');
     }
 }
-
-
-
-

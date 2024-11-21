@@ -151,9 +151,10 @@ function mostrarDatos (){
 // Función para limpiar todos elementos de un array  $_POST / $_GET
 function limpiarArrayEntrada(array &$entrada)
 {
-    foreach($entrada as $user => $datos)
+    foreach($entrada as $dato => $value)
     {
-        print_r($datos);
+       $entrada[$dato] = trim($value);
+       $entrada[$dato] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
     }
 
 }
@@ -163,5 +164,5 @@ function limpiarArrayEntrada(array &$entrada)
 // evitar ataques  CSRF, Cross-Site Request Forgery
 function checkCSRF()
 {
-    // <<<<  IMPLEMENTAR  >>>>>
+    return $_SESSION['token'] == $_POST['token'];
 }

@@ -6,8 +6,8 @@ function accionBorrar ($id){
      // anotar en $_SESSION['msg'] un mensaje si el usuario ha sido eliminado o si no existe
     
     // Elimino de la tabla
-    unset( $_SESSION['tuser'][$id]);   
-     
+    unset( $_SESSION['tuser'][$id]);
+    $_SESSION['msg'] = "se ha eliminado al usuario correctamente"; 
     
 }
 
