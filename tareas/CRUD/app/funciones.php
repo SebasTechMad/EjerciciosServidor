@@ -164,5 +164,7 @@ function limpiarArrayEntrada(array &$entrada)
 // evitar ataques  CSRF, Cross-Site Request Forgery
 function checkCSRF()
 {
-    return $_SESSION['token'] == $_POST['token'];
+     if($_SESSION['token'] != $_POST['token']){
+        exit();
+     }
 }
