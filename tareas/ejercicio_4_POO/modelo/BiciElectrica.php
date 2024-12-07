@@ -7,10 +7,17 @@ class Bicicleta{
     private $bateria; // Carga de la batería en tanto por ciento (entero)
     private $operativa; // Estado de la bicleta ( true operativa- false no disponible)
 
-    public function __construct()
+
+    public function __construct($id, $coordx, $coordy, $bateria, $operativa)
     {
-        
+        $this->$id = $id;
+        $this->$coordx = $coordx;
+        $this->$coordy = $coordy;
+        $this->$bateria = $bateria;
+        $this->$operativa = $operativa;
     }
+
+
 
     public function __get($propiedad)
     {
