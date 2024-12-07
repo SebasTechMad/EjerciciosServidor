@@ -1,8 +1,9 @@
 <?php
-$tabla = cargabicis();
+    include_once ("../controlador/funciones.php");
 
-(!empty($_GET['coordx']) && !empty($_GET['coordy'])) ? 
-$biciRecomendada = bicimascercana($_GET['coordx'], $_GET['coordy'], $tabla):"";
+    $tabla = cargabicis();
+
+    (!empty($_GET['coordx']) && !empty($_GET['coordy'])) ? $biciRecomendada = bicimascercana($_GET['coordx'], $_GET['coordy'], $bicicletas):"";
 
 ?>
 
@@ -13,7 +14,10 @@ $biciRecomendada = bicimascercana($_GET['coordx'], $_GET['coordy'], $tabla):"";
     <title>MOSTRAR BICIS OPERATIVAS</title>
     <style>
     table, th, td {
-    border: 1px solid black;
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+        padding: 0.4rem;
     }
     </style>
 

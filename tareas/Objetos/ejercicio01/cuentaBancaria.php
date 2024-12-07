@@ -36,6 +36,7 @@
         // Anotar gastos decrementa el saldo en 20 euros si
         // el saldo de la cuenta es menor 1000
         public function anotarGastos(){
+            
             if($this->saldo < 1000){
                 $this->saldo -= 20;
                 $this->numMovimientos++;
