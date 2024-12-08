@@ -31,12 +31,12 @@ class Bicicleta{
 
     public function __toString()
     {
-        return 'id de la bicicleta->'. $this->id.', bateria->'.$this->bateria;
+        return 'id de la bicicleta=>'. $this->id.', bateria=>'.$this->bateria.'%';
     }
 
     public function distancia($x, $y)
     {
-        return sqrt( ($x - $this->coordx)^2 +  ($y - $this->coordy)^2);
+        return sqrt( ($x - $this->coordx)**2 + ($y - $this->coordy)**2 );
     }
 
 }

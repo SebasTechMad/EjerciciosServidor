@@ -16,15 +16,23 @@
 
     function bicimascercana($xUser, $yUser, $tabla)
     {
-        global $biciRecomendada;
-        $resultado = 100000000;
+        $distancia = 10000000;
+        $resultado = null;
         foreach ($tabla as $bicicleta) 
         {
-            if($bicicleta->distancia($xUser, $yUser) < $resultado)
+            print_r($bicicleta->distancia($xUser,$yUser));
+            print_r("<br>");
+
+
+
+            if($bicicleta->distancia($xUser, $yUser) < $distancia)
             {
-                $biciRecomendada = $bicicleta;
+                $distancia = $bicicleta->distancia($xUser, $yUser);
+                $resultado = $bicicleta;
             } 
         }
+
+        return $resultado;
     }
 
     function mostrartablabicis()

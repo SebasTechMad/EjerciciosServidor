@@ -34,7 +34,7 @@
         <form>
         Coordenada X: <input type="number" name="coordx"><br>
         Coordenada Y: <input type="number" name="coordy"><br>
-        <input type="submit" value=" Consultar ">
+        <input type="submit" value="Consultar">
         </form>
         <?php endif ?>
     </body>
