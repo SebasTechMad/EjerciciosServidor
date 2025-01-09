@@ -4,6 +4,7 @@ require_once "app/Cliente.php";
 require_once  "app/AccesoDAO.php";
 $btnActualizar = "";
 $btnGuardar = "";
+$cliente = null;
 
 session_start();
 
@@ -22,16 +23,13 @@ else {
      $ultimo = $numclientes - ($numclientes % FPAG);
 }
 
-
-
-
-
 $primero = $_SESSION['posini'];
 
 // Segun la paginación se cambia la posición inicial
 if ( isset($_GET['orden'])){
   
     if($_GET['orden'] == "modificar" || $_GET['orden'] == "detalles"){
+        $cliente = $dbh->getCliente($_GET['id']);
         if($_GET['orden'] == "modificar"){
             $btnActualizar = "";
             $btnGuardar = "true";

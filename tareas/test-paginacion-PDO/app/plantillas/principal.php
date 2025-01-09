@@ -35,8 +35,8 @@
                 <td><?= $cli->ip_address ?> </td>
                 <td><?= $cli->telefono ?> </td>
                 <td><a href="" style="text-decoration: none; color: blue;">borrado</a></td>
-                <td><a href="./?orden=modificar" style="text-decoration: none; color: blue;">Modificar</a></td>
-                <td><a href="./?orden=detalles" style="text-decoration: none; color: blue;">Detalles</a></td>
+                <td><a href=<?="./?orden=modificar&id=".$cli->id?> style="text-decoration: none; color: blue;">Modificar</a></td>
+                <td><a href=<?="./?orden=detalles&id=".$cli->id?> style="text-decoration: none; color: blue;">Detalles</a></td>
              </tr>
             <?php endforeach; ?>    
             </tbody>

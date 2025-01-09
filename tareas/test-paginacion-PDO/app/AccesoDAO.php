@@ -15,7 +15,10 @@ class AccesoDAO {
     private $dbh = null;
     private $stmt_clientes = null;
     private $stmt_numclientes = null;
-    
+    private $stmt_cliente = null;
+    private $stmt_update_cliente = null;
+
+
     
     public static function getModelo(){
         if (self::$modelo == null){
@@ -44,6 +47,9 @@ class AccesoDAO {
         try {
         $this->stmt_clientes  = $this->dbh->prepare("select * from clientes limit :primero ,:cuantos");
         $this->stmt_numclientes  = $this->dbh->prepare("SELECT count(*) FROM clientes");
+        $this->stmt_cliente = $this->dbh->prepare("SELECT * FROM clientes WHERE id = :id");
+        $this->stmt_update_cliente = $this->dbh->prepare("UPDATE clientes SET first_name = :first_name, last_name = :last_name, 
+        email = :email, gender = :gender, ip_address = :ip_address, telefono = :telefono WHERE id = :id");
         } catch ( PDOException $e){
             echo " Error al crear la sentencias ".$e->getMessage();
             exit();
@@ -73,8 +79,31 @@ class AccesoDAO {
                $tuser[]= $user;
             }
         }
-        
         return $tuser;
+    }
+
+    public function getCliente($id){
+        $this->stmt_cliente->setFetchMode(PDO::FETCH_CLASS, 'Cliente');
+        $this->stmt_cliente->bindParam(":id",$id);
+
+        if ( $this->stmt_cliente->execute() ){
+            while ( $user = $this->stmt_cliente->fetch()){
+               $tuser[]= $user;
+            }
+        }
+        return $tuser;
+    }
+
+    public function updateCliente($first_name, $last_name, $email, $gender,$ip_address,$id){
+        $this->stmt_update_cliente->setFetchMode(PDO::FETCH_CLASS, 'Cliente');
+        $this->stmt_update_cliente->bindParam(":first_name",$first_name);
+        $this->stmt_update_cliente->bindParam(":last_name",$last_name);
+        $this->stmt_update_cliente->bindParam(":email",$email);
+        $this->stmt_update_cliente->bindParam(":gender",$gender);
+        $this->stmt_update_cliente->bindParam(":ip_address",$ip_address);
+        $this->stmt_update_cliente->bindParam(":id",$id);
+
+        $this->stmt_cliente->execute();
     }
 
     public function totalClientes ():int{
