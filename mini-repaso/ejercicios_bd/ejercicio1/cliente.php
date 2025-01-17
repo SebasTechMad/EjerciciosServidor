@@ -1,0 +1,29 @@
+<?php 
+    class Cliente{
+        private $cod_cliente;
+        private $nombre;
+        private $clave;
+        private $veces;
+
+
+        public function __get($atributo)
+        {
+            if(property_exists($this, $atributo)){
+                return $this->$atributo;
+            }
+        }
+
+        public function __set($atributo, $valor)
+        {
+            if(property_exists($this, $atributo)){
+                 $this->$atributo = $valor;
+            }
+        }
+
+
+    }
+
+
+
+
+?>
