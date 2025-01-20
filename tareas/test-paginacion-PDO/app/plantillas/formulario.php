@@ -20,7 +20,7 @@
         
         <main class="container d-flex flex-column align-items-center shadow-lg rounded-5 col-4 pt-4">
             
-            <form action="#" method="post" class="row col-10 gap-3 p-4">
+            <form method="post" class="row col-10 gap-3 p-4">
 
                 <div class="col-12 d-flex flex-row">
                     <div class="col-2 d-flex justify-content-center align-items-center">
@@ -33,6 +33,8 @@
                 
                 <?php if ($cliente): ?>
                     <?php foreach ($cliente as $cli): ?>
+
+                    <input type="hidden" name="id" value=" <?= $cli->id ?>">
                     <div class="row">
                         <label for="primerNombre" class="form-label">Primer Nombre:</label>
                         <input type="text" class="form-control" id="primerNombre" name="primerNombre" value="<?= $cli->first_name?>" placeholder="Ingresa tu primer nombre" required>
@@ -52,8 +54,8 @@
                         <label for="genero" class="form-label">Género:</label>
                         <select id="genero" class="form-control" name="genero" required>
                             <option value="" disabled>Selecciona tu género</option>
-                            <option value="male" <?= $cli->gender == "Male"?'selected':'';?> >Masculino</option>
-                            <option value="female" <?= $cli->gender == "Female"?'selected':'';?>>Femenino</option>
+                            <option value="Male" <?= $cli->gender == "Male"?'selected':'';?> >Masculino</option>
+                            <option value="Female" <?= $cli->gender == "Female"?'selected':'';?>>Femenino</option>
                         </select>
                     </div>
 
@@ -63,8 +65,8 @@
                     </div>
 
                     <div class="row">
-                        <label for="telefono" class="form-label">Direccion IP:</label>
-                        <input readonly type="tel" id="telefono" value="<?= $cli->ip_address?>" class="form-control" name="telefono" placeholder="Ingresa tu número de teléfono" required>
+                        <label for="ip" class="form-label">Direccion IP:</label>
+                        <input readonly type="text" id="ip" value="<?= $cli->ip_address?>" class="form-control" name="ip" placeholder="Ingresa tu número de teléfono" required>
                     </div>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -87,8 +89,8 @@
                         <label for="genero" class="form-label">Género:</label>
                         <select id="genero" class="form-control" name="genero" required>
                             <option value="" disabled selected>Selecciona tu género</option>
-                            <option value="masculino">Masculino</option>
-                            <option value="femenino">Femenino</option>
+                            <option value="Male">Masculino</option>
+                            <option value="Female">Femenino</option>
                         </select>
                     </div>
 
@@ -99,8 +101,8 @@
                 <?php endif; ?>
                 
                 <div class="col-12 d-flex justify-content-center gap-3">
-                    <button type="submit" class="btn btn-success mt-4" <?= $btnActualizar ? 'disabled':''; ?> >Actualizar</button>
-                    <button type="submit" class="btn btn-primary mt-4" <?= $btnGuardar ? 'disabled':''; ?> >Guardar</button>
+                    <button type="submit" name="actualizar" class="btn btn-success mt-4" <?= $btnActualizar ? 'disabled':''; ?> >Actualizar</button>
+                    <button type="submit" name="guardar" class="btn btn-primary mt-4" <?= $btnGuardar ? 'disabled':''; ?> >Guardar</button>
                 </div>
             </form>
         </main>    

@@ -34,9 +34,9 @@
                 <td><?= $cli->gender ?> </td>
                 <td><?= $cli->ip_address ?> </td>
                 <td><?= $cli->telefono ?> </td>
-                <td><a href="" style="text-decoration: none; color: blue;">borrado</a></td>
-                <td><a href=<?="./?orden=modificar&id=".$cli->id?> style="text-decoration: none; color: blue;">Modificar</a></td>
-                <td><a href=<?="./?orden=detalles&id=".$cli->id?> style="text-decoration: none; color: blue;">Detalles</a></td>
+                <td><a href=<?="./?orden=Borrar&id=".$cli->id?> style="text-decoration: none; color: blue;">borrado</a></td>
+                <td><a href=<?="./?orden=Modificar&id=".$cli->id?> style="text-decoration: none; color: blue;">Modificar</a></td>
+                <td><a href=<?="./?orden=Detalles&id=".$cli->id?> style="text-decoration: none; color: blue;">Detalles</a></td>
              </tr>
             <?php endforeach; ?>    
             </tbody>
@@ -46,6 +46,7 @@
             <button name="orden" value="Anterior">&#8592; Anterior</button>
             <button name="orden" value="Siguiente">&#8594; Siguiente</button>
             <button name="orden" value="Ultimo">&#8608; Último</button>
+            &nbsp;&nbsp;<button name="orden" value="Nuevo">Nuevo cliente</button>
         </form>
     </div>
 </div>

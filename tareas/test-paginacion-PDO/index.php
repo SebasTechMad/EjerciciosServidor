@@ -8,13 +8,32 @@ $cliente = null;
 
 session_start();
 
+
+
+
+
+
+
 // Valor por defecto de la posición inicial
 if (!isset($_SESSION['posini'])) {
     $_SESSION['posini'] = 0;
 }
 
+
 $dbh = AccesoDAO::getModelo();
 $numclientes = $dbh->totalClientes();
+
+if(isset($_POST['actualizar'])){
+    $dbh->updateCliente($_POST['primerNombre'], $_POST['segundoNombre'], $_POST['email'], $_POST['genero'], $_SERVER['REMOTE_ADDR'], $_POST['telefono'], intval($_POST['id']));
+    header("Location: ./");
+}
+
+if(isset($_POST['guardar'])){
+    $dbh->addCliente($_POST['primerNombre'], $_POST['segundoNombre'], $_POST['email'], $_POST['genero'], $_SERVER['REMOTE_ADDR'], $_POST['telefono']);
+    header("Location: ./");
+}
+
+
 
 if ( $numclientes % FPAG == 0){
     $ultimo = $numclientes - FPAG;
@@ -28,16 +47,30 @@ $primero = $_SESSION['posini'];
 // Segun la paginación se cambia la posición inicial
 if ( isset($_GET['orden'])){
   
-    if($_GET['orden'] == "modificar" || $_GET['orden'] == "detalles"){
-        $cliente = $dbh->getCliente($_GET['id']);
-        if($_GET['orden'] == "modificar"){
-            $btnActualizar = "";
-            $btnGuardar = "true";
-            include_once "app/plantillas/formulario.php";
-        }else{
-            $btnActualizar = "true";
-            $btnGuardar = "true";
-            include_once "app/plantillas/formulario.php";
+    if($_GET['orden'] == "Modificar" || $_GET['orden'] == "Detalles" || $_GET['orden'] == "Nuevo" || $_GET['orden'] == "Borrar"){
+        
+        switch ($_GET['orden']){
+            case "Modificar":
+                $cliente = $dbh->getCliente($_GET['id']);
+                $btnActualizar = "";
+                $btnGuardar = "true";
+                include_once "app/plantillas/formulario.php";
+                break;
+            case "Detalles":
+                $cliente = $dbh->getCliente($_GET['id']);
+                $btnActualizar = "true";
+                $btnGuardar = "true";
+                include_once "app/plantillas/formulario.php";
+                break;
+            case "Nuevo":
+                $btnActualizar = "true";
+                $btnGuardar = "";
+                include_once "app/plantillas/formulario.php";
+                break;
+            case "Borrar":
+                $dbh->deleteCliente($_GET['id']);
+                header("Location: ./?orden=Ultimo");
+                break;
         }
     }else{
         switch ($_GET['orden']){
