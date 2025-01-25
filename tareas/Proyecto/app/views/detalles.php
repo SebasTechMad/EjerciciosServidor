@@ -26,5 +26,11 @@
  <td><input type="tel" name="telefono" value="<?=$cli->telefono ?>" readonly ></td></tr>
  </tr>
  </table>
+
+<form action="" method="post">
+    <input type="submit" name="orden" value="Anterior">
+    <input type="submit" name="orden" value="Siguiente">
+    <?= $_SESSION['current_id'] = $cli->id ?>
+</form>
  
 
