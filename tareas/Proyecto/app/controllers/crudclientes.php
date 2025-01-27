@@ -40,39 +40,94 @@ function crudModificar($id){
 function crudPostAlta(){
     limpiarArrayEntrada($_POST); //Evito la posible inyección de código
     // !!!!!! No se controlan que los datos sean correctos 
-    $cli = new Cliente();
-    $cli->id            =$_POST['id'];
-    $cli->first_name    =$_POST['first_name'];
-    $cli->last_name     =$_POST['last_name'];
-    $cli->email         =$_POST['email'];	
-    $cli->gender        =$_POST['gender'];
-    $cli->ip_address    =$_POST['ip_address'];
-    $cli->telefono      =$_POST['telefono'];
-    $db = AccesoDatos::getModelo();
-    if ( $db->addCliente($cli) ) {
-           $_SESSION['msg'] = " El usuario ".$cli->first_name." se ha dado de alta ";
-        } else {
-            $_SESSION['msg'] = " Error al dar de alta al usuario ".$cli->first_name."."; 
-        }
+    if(postCheckDatosCorrectos())
+    {
+        $cli = new Cliente();
+       
+        $cli->id            =$_POST['id'];
+        $cli->first_name    =$_POST['first_name'];
+        $cli->last_name     =$_POST['last_name'];
+        $cli->email         =$_POST['email'];	
+        $cli->gender        =$_POST['gender'];
+        $cli->ip_address    =$_POST['ip_address'];
+        $cli->telefono      =$_POST['telefono'];
+        $db = AccesoDatos::getModelo();
+        if ( $db->addCliente($cli) ) {
+            $_SESSION['msg'] = " El usuario ".$cli->first_name." se ha dado de alta ";
+            } else {
+                $_SESSION['msg'] = " Error al dar de alta al usuario ".$cli->first_name."."; 
+            }
+        
+    }
 }
 
 function crudPostModificar(){
     limpiarArrayEntrada($_POST); //Evito la posible inyección de código
-    $cli = new Cliente();
+    
+    if(postCheckDatosCorrectos())
+    {
+        $cli = new Cliente();
 
-    $cli->id            =$_POST['id'];
-    $cli->first_name    =$_POST['first_name'];
-    $cli->last_name     =$_POST['last_name'];
-    $cli->email         =$_POST['email'];	
-    $cli->gender        =$_POST['gender'];
-    $cli->ip_address    =$_POST['ip_address'];
-    $cli->telefono      =$_POST['telefono'];
-    $db = AccesoDatos::getModelo();
-    if ( $db->modCliente($cli) ){
-        $_SESSION['msg'] = " El usuario ha sido modificado";
-    } else {
-        $_SESSION['msg'] = " Error al modificar el usuario ";
+        $cli->id            =$_POST['id'];
+        $cli->first_name    =$_POST['first_name'];
+        $cli->last_name     =$_POST['last_name'];
+        $cli->email         =$_POST['email'];	
+        $cli->gender        =$_POST['gender'];
+        $cli->ip_address    =$_POST['ip_address'];
+        $cli->telefono      =$_POST['telefono'];
+        $db = AccesoDatos::getModelo();
+        if ( $db->modCliente($cli) ){
+            $_SESSION['msg'] = " El usuario ha sido modificado";
+        } else {
+            $_SESSION['msg'] = " Error al modificar el usuario ";
+        }
     }
+}
+
+// Metodo que utilizaremos para comprobar si la entrada de datos
+// es la correcta para cada entrada
+function postCheckDatosCorrectos(){
+    $comprobacion = true;
+    $errorres = 0;
+
+    $cadError = "";
+    
+    
+    if($_POST['id'] != ""){
+        $comprobacion = false;
+        $cadError .= "id, ";
+        $errorres++;
+    }
+
+    if($_POST['first_name'] == ""){
+        $comprobacion = false;
+        $cadError .= "primer nombre, ";
+        $errorres++;
+    }
+
+    if($_POST['last_name'] == ""){
+        $comprobacion = false;
+        $cadError .= "segundo nombre, ";
+        $errorres++;
+    }
+
+    if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+        $comprobacion = false;
+        $cadError .= "correo, ";
+        $errorres++;
+    }
+
+
+    if($errorres == 1){
+        $cadError = str_replace(", ","",$cadError);
+    }
+
+    if(!$comprobacion){
+        $_SESSION['msg'] = "Error en el ".$cadError.". Vuelva a intentarlo";
+    }
+
+
+    return $comprobacion;
 }
 
 function crudPostSiguiente($id){
@@ -104,3 +159,6 @@ function crudAnterior($id){
 
     ($calc > 0) ? $cli = crudDetalles($calc): $cli = crudDetalles(intval($id));
 }
+
+
+
