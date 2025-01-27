@@ -21,9 +21,16 @@
     <label for="telefono">Teléfono:</label>
     <input type="text" id="telefono" name="telefono" value="<?= $cli->telefono; ?>">
 
-    <input type="submit" name="orden" value="Anterior">
-    <input type="submit" name="orden" value="<?= $orden ?>">
-    <input type="submit" name="orden" value="Volver">
-    <input type="submit" name="orden" value="Siguiente">
-    <input type="hidden" value="<?= $_SESSION['current_id'] = $cli->id ?>">
+    <?php if( $cli->id != "" ): ?>
+        <input type="submit" name="orden" value="Anterior">
+        <input type="submit" name="orden" value="<?= $orden ?>">
+        <input type="submit" name="orden" value="Volver">
+        <input type="submit" name="orden" value="Siguiente">
+        <input type="hidden" value="<?= $_SESSION['current_id'] = $cli->id ?>">
+    <?php else:?>
+        <input type="submit" name="orden" value="Volver">
+        <input type="submit" name="orden" value="<?= $orden ?>">
+    <?php endif;?>
+
+    
 </form>

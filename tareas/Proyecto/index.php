@@ -9,6 +9,11 @@ require_once 'app/models/Cliente.php';
 require_once 'app/models/AccesoDatosPDO.php';
 require_once 'app/controllers/crudclientes.php';
 
+if(!isset($_SESSION['current_id'])){
+    $_SESSION['current_id'] = "";
+}
+
+
 //---- PAGINACIÓN ----
 $midb = AccesoDatos::getModelo();
 $totalfilas = $midb->numClientes();
@@ -50,6 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
             case "Modificar": crudModificar($_GET['id']); break;
             case "Detalles" : crudDetalles ($_GET['id']);break;
             case "Terminar" : crudTerminar(); break;
+            case "Anterior" : crudAnterior($_SESSION['current_id']); break;
+            case "Siguiente": crudSiguiente($_SESSION['current_id']); break;
         }
     }
 } 
@@ -60,6 +67,8 @@ else {
              case "Nuevo"    : crudPostAlta(); break;
              case "Modificar": crudPostModificar(); break;
              case "Detalles":; // No hago nada
+             case "Siguiente": crudPostSiguiente($_SESSION['current_id']); break;
+             case "Anterior": crudPostAnterior($_SESSION['current_id']); break;        
          }
     }
 }

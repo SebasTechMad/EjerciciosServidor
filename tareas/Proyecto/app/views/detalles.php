@@ -27,10 +27,12 @@
  </tr>
  </table>
 
-<form action="" method="post">
-    <input type="submit" name="orden" value="Anterior">
-    <input type="submit" name="orden" value="Siguiente">
-    <?= $_SESSION['current_id'] = $cli->id ?>
-</form>
+<?php if($cli): ?>
+    <form action="" method="GET">
+        <input type="submit" name="orden" value="Anterior">
+        <input type="submit" name="orden" value="Siguiente">
+        <input type="hidden" value="<?= $_SESSION['current_id'] = $cli->id ?>">
+    </form>
+<?php endif; ?>
  
 

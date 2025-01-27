@@ -73,5 +73,34 @@ function crudPostModificar(){
     } else {
         $_SESSION['msg'] = " Error al modificar el usuario ";
     }
-    
+}
+
+function crudPostSiguiente($id){
+    $db = AccesoDatos::getModelo();
+    $clientes = $db->numClientes();
+
+    $calc = intval($id) + 1;
+    ($calc <= $clientes) ? $cli = crudModificar($calc): $cli = crudModificar($id);
+}
+
+function crudPostAnterior($id){
+    $db = AccesoDatos::getModelo();
+    $calc = intval($id) - 1;
+
+    ($calc > 0) ? $cli = crudModificar($calc): $cli = crudModificar(intval($id));
+}
+
+function crudSiguiente($id){
+    $db = AccesoDatos::getModelo();
+    $clientes = $db->numClientes();
+
+    $calc = intval($id) + 1;
+    ($calc <= $clientes) ? $cli = crudDetalles($calc): $cli = crudDetalles($id);
+}
+
+function crudAnterior($id){
+    $db = AccesoDatos::getModelo();
+    $calc = intval($id) - 1;
+
+    ($calc > 0) ? $cli = crudDetalles($calc): $cli = crudDetalles(intval($id));
 }

@@ -26,11 +26,12 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
+  text-align: center;
 }
 th, td {
   border: 1px solid #ddd;
   padding: 10px;
-  text-align: left;
+  text-align: center;
 }
 th {
   background-color: #f4f4f4;
@@ -88,6 +89,42 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover{
   background-color: #45a049;
 }
+
+input[value="Anterior"]{
+  background-color: #ea4c0e; /* Verde */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[value="Anterior"]:hover{
+  background-color: #641c00; /* Verde */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[value="Siguiente"]{
+  background-color: #0055fe; /* Verde */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[value="Siguiente"]:hover{
+  background-color: #00297a; /* Verde */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
