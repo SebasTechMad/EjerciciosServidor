@@ -130,9 +130,9 @@ function postCheckDatosCorrectos(){
         $comprobacion = false;
         $cadError .= "número de teléfono, ";
     }else{
-        $cifra = 0; 
+        $lineaNumeros = 0; 
         foreach($cadTelefono as $cifra) {
-            if($cifra = count($cadTelefono)-1){
+            if($lineaNumeros == count($cadTelefono)-1){
 
                 if(strlen($cifra) != 4)
                 {
@@ -140,7 +140,10 @@ function postCheckDatosCorrectos(){
                     $cadError .= "número de teléfono, ";
                     break;    
                 }
-            }else{
+            }
+            
+            else{
+                
                 if(strlen($cifra) != 3)
                 {
                     $comprobacion = false;
@@ -148,7 +151,7 @@ function postCheckDatosCorrectos(){
                     break;    
                 }
             }
-            $cifra++;
+            $lineaNumeros++;
         }
     }
 
