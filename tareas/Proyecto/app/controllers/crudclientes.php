@@ -117,6 +117,43 @@ function postCheckDatosCorrectos(){
         $errorres++;
     }
 
+    if(!filter_var($_POST['ip_address'], FILTER_VALIDATE_IP)){
+        $comprobacion = false;
+        $cadError .= "direccion ip, ";
+        $errorres++;
+    }
+
+    //Comprobamos el numero de telefono
+    $cadTelefono = explode("-", $_POST['telefono']);
+
+    if(count($cadTelefono) != 3){
+        $comprobacion = false;
+        $cadError .= "número de teléfono, ";
+    }else{
+        $cifra = 0; 
+        foreach($cadTelefono as $cifra) {
+            if($cifra = count($cadTelefono)-1){
+
+                if(strlen($cifra) != 4)
+                {
+                    $comprobacion = false;
+                    $cadError .= "número de teléfono, ";
+                    break;    
+                }
+            }else{
+                if(strlen($cifra) != 3)
+                {
+                    $comprobacion = false;
+                    $cadError .= "número de teléfono, ";
+                    break;    
+                }
+            }
+            $cifra++;
+        }
+    }
+
+    
+
 
     if($errorres == 1){
         $cadError = str_replace(", ","",$cadError);
