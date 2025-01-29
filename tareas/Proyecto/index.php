@@ -13,6 +13,7 @@ if(!isset($_SESSION['current_id'])){
     $_SESSION['current_id'] = "";
 }
 
+$imgURL = "";
 
 //---- PAGINACIÓN ----
 $midb = AccesoDatos::getModelo();
