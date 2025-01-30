@@ -32,9 +32,12 @@ function crudDetalles($id){
 
 
 function crudModificar($id){
+    global $imgURL;
+    
     $db = AccesoDatos::getModelo();
     $cli = $db->getCliente($id);
-    checkFotoPerfil($id);
+    $imgURL = checkFotoPerfil($id);
+    print_r($imgURL);
     $orden="Modificar";
     include_once "app/views/formulario.php";
 }

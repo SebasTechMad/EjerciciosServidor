@@ -24,7 +24,7 @@
             <input type="text" id="telefono" name="telefono" value="<?= $cli->telefono; ?>">
         </div>
         <div style="width:50%; display:flex; flex-direction:column; justify-content:center;">
-            <img src="<?= $imgURL ?>" alt="">
+            <img src='<?= $imgURL ?>' alt="">
             <input type="hidden" name="">
             <input name="archivo" id="archivo" type="file" accept="image/png"/>
         </div>

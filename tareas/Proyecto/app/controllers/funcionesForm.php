@@ -78,9 +78,17 @@
 
 
     function checkFotoPerfil($id){
+        
+        $url = "";
+        
         $numID = intval($id);
         $numID = $numID / 100000000;
-        $numID = number_format($numID,8); 
-        print_r($numID);
+        $numID = number_format($numID,8);
+        $numID = str_replace("0.","",$numID);
+        
+        $url = "app/uploads/".$numID.".jpg";
+
+        
+        return $url;
     }
 ?>
