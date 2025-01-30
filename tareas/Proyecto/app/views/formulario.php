@@ -1,5 +1,5 @@
 <hr>
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     <div style="display:flex; justify-content:space-between; gap:2rem; width:100%;">
         <div style="display:flex; flex-direction:column; align-items:start; width:50%;">
             <label for="id">Id:</label>
@@ -25,8 +25,8 @@
         </div>
         <div style="width:50%; display:flex; flex-direction:column; justify-content:center;">
             <img src='<?= $imgURL ?>' alt="">
-            <input type="hidden" name="">
-            <input name="archivo" id="archivo" type="file" accept="image/png"/>
+            <input type="hidden" name="MAX_FILE_SIZE" value="512000">
+            <input name="foto" id="archivo" type="file" accept="image/png,image/jpeg"/>
         </div>
     </div>
 

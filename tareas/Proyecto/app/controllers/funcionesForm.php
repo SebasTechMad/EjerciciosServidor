@@ -62,6 +62,41 @@
                 $lineaNumeros++;
             }
         }
+        
+
+        //COSAS PARA VER IMBECIL
+
+        //*PIENSA COMO HACER ESTO PARA AÑADIRLO
+        //*TIENES QUE SUSTITUIR LA IMAGEN SI YA SE HA SUBIDO UNA IMAGEN DE UN USUARIO
+        if ($_FILES['foto']['error'] == UPLOAD_ERR_OK) {
+            
+            $uploadDir = 'app/uploads/';
+
+
+
+            $formatos_permitidos =  array('jpg','png');
+            $archivo = $_FILES['foto']['name'];
+            $extension = pathinfo($archivo, PATHINFO_EXTENSION);
+
+            if(!in_array($extension, $formatos_permitidos) ) {
+                $cadError .= "formato de imagen, ";
+            }else{
+
+                $numID = intval($_SESSION['current_id']);
+                $numID = $numID / 100000000;
+                $numID = number_format($numID,8);
+                $numID = str_replace("0.","",$numID);
+
+
+                $uploadFile = $uploadDir.$numID.".".$extension;
+                move_uploaded_file($_FILES['foto']['tmp_name'], $uploadFile);
+            }
+
+        }else{
+            $cadError .= "tamaño de imagen, ";
+        }
+
+        
 
         
 
@@ -87,6 +122,13 @@
         $numID = str_replace("0.","",$numID);
         
         $url = "app/uploads/".$numID.".jpg";
+        $url1 = "app/uploads/".$numID.".jpeg";
+        $url2 = "app/uploads/".$numID.".png";
+
+        if(!file_exists($url) && !file_exists($url1) && !file_exists($url2))
+        {
+            $url = "https://robohash.org/".$numID;
+        }
 
         
         return $url;
