@@ -74,7 +74,7 @@
 
 
 
-            $formatos_permitidos =  array('jpg','png');
+            $formatos_permitidos =  array('jpg','png','jpeg');
             $archivo = $_FILES['foto']['name'];
             $extension = pathinfo($archivo, PATHINFO_EXTENSION);
 
@@ -115,22 +115,32 @@
     function checkFotoPerfil($id){
         
         $url = "";
+        $pathurl = "app/uploads/";
+        $rutaValida = false;
         
         $numID = intval($id);
         $numID = $numID / 100000000;
         $numID = number_format($numID,8);
         $numID = str_replace("0.","",$numID);
-        
-        $url = "app/uploads/".$numID.".jpg";
-        $url1 = "app/uploads/".$numID.".jpeg";
-        $url2 = "app/uploads/".$numID.".png";
 
-        if(!file_exists($url) && !file_exists($url1) && !file_exists($url2))
+        $extensiones = array(".jpg",".jpeg",".png");
+
+        foreach ($extensiones as $extension)
+        {
+            $url = $pathurl.$numID.$extension;
+            
+            if(file_exists($url))
+            {
+                $rutaValida = true;
+                break;
+            }
+        }
+
+        if(!$rutaValida)
         {
             $url = "https://robohash.org/".$numID;
         }
 
-        
         return $url;
     }
 ?>

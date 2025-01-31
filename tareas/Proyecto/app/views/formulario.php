@@ -1,7 +1,7 @@
 <hr>
 <form method="POST" enctype="multipart/form-data">
     <div style="display:flex; justify-content:space-between; gap:2rem; width:100%;">
-        <div style="display:flex; flex-direction:column; align-items:start; width:50%;">
+        <div style="display:flex; flex-direction:column; align-items:start; width:100%;">
             <label for="id">Id:</label>
             <input type="text" name="id" readonly value="<?= $cli->id ?>">
 
@@ -23,7 +23,7 @@
             <label for="telefono">Teléfono:</label>
             <input type="text" id="telefono" name="telefono" value="<?= $cli->telefono; ?>">
         </div>
-        <div style="width:50%; display:flex; flex-direction:column; justify-content:center;">
+        <div style="width:100%; display:flex; flex-direction:column; justify-content:center; gap:2rem;">
             <img src='<?= $imgURL ?>' alt="">
             <input type="hidden" name="MAX_FILE_SIZE" value="512000">
             <input name="foto" id="archivo" type="file" accept="image/png,image/jpeg"/>
