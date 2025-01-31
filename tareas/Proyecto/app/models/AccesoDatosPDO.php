@@ -87,6 +87,18 @@ class AccesoDatos {
         return $cli;
     }
 
+    public function getLastCliente(){
+        $cli = false;
+        $stmt_cli   = $this->dbh->prepare("SELECT * FROM `Clientes` ORDER BY id DESC LIMIT 1");
+        $stmt_cli->setFetchMode(PDO::FETCH_CLASS, 'Cliente');
+        if ( $stmt_cli->execute() ){
+             if ( $obj = $stmt_cli->fetch()){
+                $cli= $obj;
+            }
+        }
+        return $cli;
+    }
+
    
 
     // UPDATE TODO
@@ -111,16 +123,26 @@ class AccesoDatos {
     //INSERT 
     public function addCliente($cli):bool{
        
+        $result = $this->dbh->query("SELECT id FROM Clientes");
+        $num = $result->rowCount();
+        $id = $num + 1;
+
+
+
+
+
         // El id se define automáticamente por autoincremento.
         $stmt_crearcli  = $this->dbh->prepare(
-            "INSERT INTO `Clientes`( `first_name`, `last_name`, `email`, `gender`, `ip_address`, `telefono`)".
-            "Values(?,?,?,?,?,?)");
-        $stmt_crearcli->bindValue(1,$cli->first_name);
-        $stmt_crearcli->bindValue(2,$cli->last_name);
-        $stmt_crearcli->bindValue(3,$cli->email);
-        $stmt_crearcli->bindValue(4,$cli->gender);
-        $stmt_crearcli->bindValue(5,$cli->ip_address);
-        $stmt_crearcli->bindValue(6,$cli->telefono);    
+            "INSERT INTO `Clientes`( `id`,`first_name`, `last_name`, `email`, `gender`, `ip_address`, `telefono`)".
+            "Values(?,?,?,?,?,?,?)");
+        
+        $stmt_crearcli->bindValue(1,$id);
+        $stmt_crearcli->bindValue(2,$cli->first_name);
+        $stmt_crearcli->bindValue(3,$cli->last_name);
+        $stmt_crearcli->bindValue(4,$cli->email);
+        $stmt_crearcli->bindValue(5,$cli->gender);
+        $stmt_crearcli->bindValue(6,$cli->ip_address);
+        $stmt_crearcli->bindValue(7,$cli->telefono);    
         $stmt_crearcli->execute();
         $resu = ($stmt_crearcli->rowCount () == 1);
         return $resu;

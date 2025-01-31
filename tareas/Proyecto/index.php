@@ -14,6 +14,7 @@ if(!isset($_SESSION['current_id'])){
 }
 
 $imgURL = "";
+$bandera = "";
 
 //---- PAGINACIÓN ----
 $midb = AccesoDatos::getModelo();

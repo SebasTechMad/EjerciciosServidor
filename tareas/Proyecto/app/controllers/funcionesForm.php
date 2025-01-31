@@ -66,41 +66,47 @@
 
         //COSAS PARA VER IMBECIL
 
-        //*PIENSA COMO HACER ESTO PARA AÑADIRLO
         //*TIENES QUE SUSTITUIR LA IMAGEN SI YA SE HA SUBIDO UNA IMAGEN DE UN USUARIO
-        if ($_FILES['foto']['error'] == UPLOAD_ERR_OK) {
+
+        if($_SESSION['current_id'] != "")
+        {
+            if ($_FILES['foto']['error'] == UPLOAD_ERR_OK) {
             
-            $uploadDir = 'app/uploads/';
+                $uploadDir = 'app/uploads/';
+    
+                $formatos_permitidos =  array('jpg','png','jpeg');
+                $archivo = $_FILES['foto']['name'];
+                $extension = pathinfo($archivo, PATHINFO_EXTENSION);
+    
+                if(!in_array($extension, $formatos_permitidos) ) {
+                    $cadError .= "formato de imagen, ";
+                }else{
+    
+                    $numID = intval($_SESSION['current_id']);
+                    $numID = $numID / 100000000;
+                    $numID = number_format($numID,8);
+                    $numID = str_replace("0.","",$numID);
 
-
-
-            $formatos_permitidos =  array('jpg','png','jpeg');
-            $archivo = $_FILES['foto']['name'];
-            $extension = pathinfo($archivo, PATHINFO_EXTENSION);
-
-            if(!in_array($extension, $formatos_permitidos) ) {
-                $cadError .= "formato de imagen, ";
-            }else{
-
-                $numID = intval($_SESSION['current_id']);
-                $numID = $numID / 100000000;
-                $numID = number_format($numID,8);
-                $numID = str_replace("0.","",$numID);
-
-
-                $uploadFile = $uploadDir.$numID.".".$extension;
-                move_uploaded_file($_FILES['foto']['tmp_name'], $uploadFile);
+                    foreach ($formatos_permitidos as $formato)
+                    {
+                        if(file_exists($uploadDir.$numID.".".$formato))
+                        {
+                            unlink($uploadDir.$numID.".".$formato);
+                        }
+                    }
+    
+    
+                    $uploadFile = $uploadDir.$numID.".".$extension;
+                    move_uploaded_file($_FILES['foto']['tmp_name'], $uploadFile);
+                }
+    
             }
-
-        }else{
-            $cadError .= "tamaño de imagen, ";
+            else{
+                $cadError .= "tamaño de imagen, ";
+            }
         }
 
         
-
-        
-
-
         if($errorres == 1){
             $cadError = str_replace(", ","",$cadError);
         }
@@ -143,4 +149,59 @@
 
         return $url;
     }
+
+
+    function addProfileId($id)
+    {
+        if ($_FILES['foto']['error'] == UPLOAD_ERR_OK) {
+        
+            $uploadDir = 'app/uploads/';
+
+            $formatos_permitidos =  array('jpg','png','jpeg');
+            $archivo = $_FILES['foto']['name'];
+            $extension = pathinfo($archivo, PATHINFO_EXTENSION);
+
+            if(!in_array($extension, $formatos_permitidos) ) {
+                $cadError .= "formato de imagen, ";
+            }else{
+
+                $numID = intval($id);
+                $numID = $numID / 100000000;
+                $numID = number_format($numID,8);
+                $numID = str_replace("0.","",$numID);
+
+
+                $uploadFile = $uploadDir.$numID.".".$extension;
+                move_uploaded_file($_FILES['foto']['tmp_name'], $uploadFile);
+            }
+
+        }
+    }
+
+    function getBandera($ip)
+    {
+        $url = "";
+
+        //print_r(strval($ip));
+
+        //$ip = "8.8.8.8"; // Reemplaza con la IP que quieras consultar
+        $url = "http://ip-api.com/json/".strval($ip);
+
+        // Obtener el contenido JSON de la API
+        $response = file_get_contents($url);
+
+        // Decodificar el JSON
+        $json_ip = json_decode($response, true);
+
+        print_r($json_ip);
+
+
+
+
+        $url = "https://flagpedia.net/data/flags/w580/".strtolower($json_ip['countryCode']).".png";
+
+        return $url;
+    }
+
+
 ?>

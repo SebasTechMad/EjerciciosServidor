@@ -20,12 +20,16 @@ function crudTerminar(){
 function crudAlta(){
     $cli = new Cliente();
     $orden= "Nuevo";
+    $_SESSION['current_id'] = "";
     include_once "app/views/formulario.php";
 }
 
 function crudDetalles($id){
+    global $bandera;
+
     $db = AccesoDatos::getModelo();
     $cli = $db->getCliente($id);
+    $bandera = getBandera($cli->ip_address);
     include_once "app/views/detalles.php";
 }
 
@@ -60,10 +64,11 @@ function crudPostAlta(){
         $db = AccesoDatos::getModelo();
         if ( $db->addCliente($cli) ) {
             $_SESSION['msg'] = " El usuario ".$cli->first_name." se ha dado de alta ";
+            $newID = $db->getLastCliente();
+            addProfileId($newID->id);
             } else {
                 $_SESSION['msg'] = " Error al dar de alta al usuario ".$cli->first_name."."; 
             }
-        
     }
 }
 
