@@ -86,7 +86,7 @@ if ( isset($_GET['orden'])){
             case "Anterior":
                 $primero -= FPAG;
                 if ( $primero < 0){
-                    $primero = 0;
+                    $º = 0;
                 }
                 break;
             case "Ultimo":

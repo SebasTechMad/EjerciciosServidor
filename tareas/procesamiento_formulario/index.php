@@ -22,6 +22,7 @@
 
         if ($_FILES['foto']['error'] !== UPLOAD_ERR_OK) {
             $uploadFile = $uploadDir . "imageNotFound.gif";
+            
         }else{
             $uploadFile = $uploadDir . basename($_FILES['foto']['name']);
         }
